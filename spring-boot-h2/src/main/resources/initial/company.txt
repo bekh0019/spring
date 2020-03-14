@@ -1,0 +1,1 @@
+[{"id":1,"name":"Vodafone"},{"id":2,"name":"Kyivstar"},{"id":3,"name":"Life"}]
