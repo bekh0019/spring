@@ -1,0 +1,22 @@
+package com.epam.controller;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Optional;
+
+@Controller
+public class LoginController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
+
+    @GetMapping("/login")
+    public ModelAndView getLoginPage(@RequestParam Optional<String> error) {
+        LOGGER.debug("Getting login page, error={}", error);
+        return new ModelAndView("login", "error", error);
+    }
+}

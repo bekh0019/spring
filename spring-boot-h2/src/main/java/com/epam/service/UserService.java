@@ -1,15 +1,22 @@
 /**
- * 
+ *
  */
 package com.epam.service;
 
-import java.util.List;
-
 import com.epam.model.User;
+import com.epam.model.UserCreateForm;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
-	List<User> getUsers();
+    Optional<User> getUserById(Long id);
 
-	void saveUsers(List<User> users);
+    Optional<User> getUserByEmail(String email);
 
+    List<User> getUsers();
+
+    void saveUsers(List<User> users);
+
+    User create(UserCreateForm form);
 }
