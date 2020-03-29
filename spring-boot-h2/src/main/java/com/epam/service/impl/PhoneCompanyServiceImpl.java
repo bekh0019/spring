@@ -24,4 +24,9 @@ public class PhoneCompanyServiceImpl implements PhoneCompanyService {
     public void savePhoneCompanies(List<PhoneCompany> companies) {
         companies.forEach(phoneCompanyRepository::save);
     }
+
+    @Override
+    public PhoneCompany findByName(String name) {
+        return phoneCompanyRepository.findByName(name);
+    }
 }

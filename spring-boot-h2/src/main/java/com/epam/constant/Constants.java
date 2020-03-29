@@ -1,5 +1,7 @@
 package com.epam.constant;
 
+import java.math.BigDecimal;
+
 public class Constants {
     public static final String MESSAGE = "message";
     public static final String ERROR_FORMAT_FILE_MESSAGE = "Please select a file in txt format";
@@ -9,4 +11,5 @@ public class Constants {
     public static final String PHONE = "phone";
     public static final String COMPANY = "company";
     public static final String ACCEPT_REQUEST_HEADER = "application.pdf";
+    public static final BigDecimal CHANGE_NUMBER_PRICE = new BigDecimal(500);
 }

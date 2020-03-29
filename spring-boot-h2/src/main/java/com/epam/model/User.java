@@ -5,12 +5,12 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Getter
 @Setter
 @ToString
 @Entity
-@Table(name = "user")
 public class User {
 
     @Id
@@ -20,6 +20,10 @@ public class User {
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
+
+
+    @Column(name = "userCash", nullable = false)
+    private BigDecimal userCash;
 
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;

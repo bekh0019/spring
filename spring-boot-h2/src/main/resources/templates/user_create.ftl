@@ -1,5 +1,5 @@
 <#-- @ftlvariable name="_csrf" type="org.springframework.security.web.csrf.CsrfToken" -->
-<#-- @ftlvariable name="form" type="eu.kielczewski.example.domain.UserCreateForm" -->
+<#-- @ftlvariable name="form" type="com.epam.model.UserCreateForm" -->
 <#import "/spring.ftl" as spring>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,6 +22,10 @@
     <div>
         <label for="email">Email address</label>
         <input type="email" name="email" id="email" value="${form.email}" required autofocus/>
+    </div>
+    <div>
+            <label for="userCash">Cash amount</label>
+            <input type="text" id="userCash" name="userCash" value="${form.userCash}" required autofocus/>
     </div>
     <div>
         <label for="password">Password</label>

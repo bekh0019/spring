@@ -18,4 +18,10 @@ public class PhoneCompany {
 
     private String name;
 
+    public PhoneCompany() {
+    }
+
+    public PhoneCompany(String name) {
+        this.name = name;
+    }
 }

@@ -1,5 +1,5 @@
 <#-- @ftlvariable name="_csrf" type="org.springframework.security.web.csrf.CsrfToken" -->
-<#-- @ftlvariable name="currentUser" type="eu.kielczewski.example.domain.CurrentUser" -->
+<#-- @ftlvariable name="currentUser" type="com.epam.model.CurrentUser" -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,6 +20,7 @@
             </form>
         </li>
         <li><a href="/user/${currentUser.id}">View myself</a></li>
+        <li><a href="/user/${currentUser.id}/changeOperator">Change operator</a></li>
     </#if>
     <#if currentUser?? && currentUser.role == "BOOKING_MANAGER">
         <li><a href="/user/create">Create a new user</a></li>

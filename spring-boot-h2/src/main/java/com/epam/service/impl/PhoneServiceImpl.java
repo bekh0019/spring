@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PhoneServiceImpl implements PhoneService {
@@ -25,5 +26,15 @@ public class PhoneServiceImpl implements PhoneService {
     @Override
     public void savePhones(List<Phone> phones) {
         phones.forEach(phoneRepository::save);
+    }
+
+    @Override
+    public Optional<Phone> findByUserId(Long id) {
+        return Optional.ofNullable(phoneRepository.findOne(id));
+    }
+
+    @Override
+    public Phone save(Phone phone) {
+        return phoneRepository.save(phone);
     }
 }

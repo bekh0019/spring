@@ -1,7 +1,9 @@
 package com.epam.controller;
 
+import com.epam.model.NumberChangeForm;
 import com.epam.model.UserCreateForm;
 import com.epam.model.validator.UserCreateFormValidator;
+import com.epam.service.PhoneCompanyService;
 import com.epam.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +28,9 @@ public class UserController {
 
     @Autowired
     private UserCreateFormValidator userCreateFormValidator;
+
+    @Autowired
+    PhoneCompanyService phoneCompanyService;
 
     @InitBinder("form")
     public void initBinder(WebDataBinder binder) {

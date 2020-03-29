@@ -15,9 +15,6 @@ public class Phone {
 
     private String number;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private PhoneCompany company;
-
-    @ManyToOne
-    private User user;
 }
