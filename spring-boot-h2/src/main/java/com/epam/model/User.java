@@ -18,6 +18,10 @@ public class User {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
+    public Long getId() {
+        return id;
+    }
+
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 

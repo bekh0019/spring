@@ -6,6 +6,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ValidationUtils {
+    private ValidationUtils() {
+    }
+
     private static final String TEXT_PATTERN =
             "([^\\s]+(\\.(?i)(txt))$)";
 

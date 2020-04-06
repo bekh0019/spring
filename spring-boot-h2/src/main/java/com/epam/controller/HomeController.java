@@ -15,7 +15,6 @@ public class HomeController {
     @GetMapping("/")
     public String getHomePage(HttpServletRequest request) {
         LOGGER.debug("Getting home page");
-        request.getCookies();
         return "home";
     }
 

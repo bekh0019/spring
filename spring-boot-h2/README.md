@@ -10,6 +10,8 @@ The application contains functionality:
 * Basic "remember me" authentication
 * URL-based security
 * Method-level security
+* Transactions support
+* SonarQube integration
 
 Requirements
 ------------
@@ -18,5 +20,8 @@ Requirements
 
 Quick start
 -----------
-1. `mvn spring-boot:run`
-3. Point your browser to [http://localhost:8080/](http://localhost:8080/)
+1. mvn spring-boot:run
+2. Point your browser to [http://localhost:8080/](http://localhost:8080/)
+3. mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=use_your_token_here
+4. Check localhost:9000 for report.
+

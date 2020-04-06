@@ -32,7 +32,7 @@ public class ChangeNumberController {
 
     @PreAuthorize("@currentUserServiceImpl.canAccessUser(principal, #id)")
     @PostMapping("/user/{id}/changeOperator")
-    public ModelAndView handleChangeNumber(@PathVariable Long id, @ModelAttribute("form") NumberChangeForm form) throws Exception {
+    public ModelAndView handleChangeNumber(@PathVariable Long id, @ModelAttribute("form") NumberChangeForm form) {
         form.setUserId(id);
         userAccountService.updateMobileOperator(form);
         return new ModelAndView("redirect:/");

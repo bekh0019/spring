@@ -9,20 +9,14 @@ import com.epam.service.UserAccountService;
 import com.epam.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.TransactionCallbackWithoutResult;
-import org.springframework.transaction.support.TransactionTemplate;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+@Transactional
 @Service
 public class UserAccountServiceImpl implements UserAccountService {
-
-
-    @Autowired
-    private PlatformTransactionManager transactionManager;
 
     @Autowired
     UserService userService;
@@ -38,19 +32,18 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     @Override
     public void updateMobileOperator(NumberChangeForm form) {
-        TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
-        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-            @Override
-            protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
                 Phone phone = new Phone();
+                User user = new User();
                 Optional<User> userOptional = userService.getUserById(form.getUserId());
                 Optional<BigDecimal> userCash = userOptional.map(User::getUserCash);
                 if (userCash.isPresent() &&
                         Constants.CHANGE_NUMBER_PRICE.subtract(userCash.get()).compareTo(BigDecimal.ZERO) > 0) {
-                    transactionStatus.setRollbackOnly();
+                    throw new UnsupportedOperationException();
                 }
-                User user = userOptional.get();
-                user.setUserCash(userCash.get().subtract(Constants.CHANGE_NUMBER_PRICE));
+                if (userOptional.isPresent() && userCash.isPresent()){
+                    user = userOptional.get();
+                    user.setUserCash(userCash.get().subtract(Constants.CHANGE_NUMBER_PRICE));
+                }
                 userService.save(user);
                 final Optional<Phone> phoneByUserId = phoneService.findByUserId(form.getUserId());
                 if(phoneByUserId.isPresent()){
@@ -65,8 +58,6 @@ public class UserAccountServiceImpl implements UserAccountService {
                 userAccount.setPhone(phone);
                 userAccountRepository.save(userAccount);
             }
-        });
-    }
 
     @Override
     public UserAccount save(UserAccount userAccount) {

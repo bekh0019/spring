@@ -8,12 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Autowired
     private UserRepository userRepository;
@@ -53,5 +58,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(User user) {
       return userRepository.save(user);
+    }
+
+    @Override
+    public Optional<List<User>> findUsersOrderByIdAsc(int number) {
+      return   Optional.ofNullable(entityManager.createQuery("SELECT u FROM User u ORDER BY id ASC",
+                User.class)
+                .setMaxResults(number).getResultList());
+    }
+
+    @Override
+    public Optional<List<User>> findUsersOrderByIdDesc(int number) {
+        return Optional.ofNullable(entityManager.createQuery("SELECT u FROM User u ORDER BY id DESC",
+                User.class)
+                .setMaxResults(number).getResultList());
     }
 }

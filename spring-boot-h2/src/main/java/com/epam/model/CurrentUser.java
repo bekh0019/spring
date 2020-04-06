@@ -1,14 +1,14 @@
 package com.epam.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.springframework.security.core.authority.AuthorityUtils;
 
-@Getter
-@Setter
+import java.io.Serializable;
+
+@Data
 public class CurrentUser extends org.springframework.security.core.userdetails.User {
 
-    private User user;
+    private transient User user;
 
     public CurrentUser(User user) {
         super(user.getEmail(), user.getPasswordHash(), AuthorityUtils.createAuthorityList(user.getRole().toString()));

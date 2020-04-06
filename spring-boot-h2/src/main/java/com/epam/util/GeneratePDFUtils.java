@@ -5,12 +5,18 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 public class GeneratePDFUtils {
+    private GeneratePDFUtils() {
+    }
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(GeneratePDFUtils.class);
 
     public static ByteArrayInputStream getUsersPDF(List<User> users) {
 
@@ -67,7 +73,7 @@ public class GeneratePDFUtils {
             document.close();
 
         } catch (DocumentException ex) {
-            ex.printStackTrace();
+            LOGGER.error(ex.getMessage());
         }
 
         return new ByteArrayInputStream(out.toByteArray());

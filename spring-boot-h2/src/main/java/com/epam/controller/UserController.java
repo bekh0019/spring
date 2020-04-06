@@ -1,6 +1,5 @@
 package com.epam.controller;
 
-import com.epam.model.NumberChangeForm;
 import com.epam.model.UserCreateForm;
 import com.epam.model.validator.UserCreateFormValidator;
 import com.epam.service.PhoneCompanyService;
@@ -19,12 +18,19 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.util.NoSuchElementException;
 
+import static com.epam.constant.Constants.*;
+
 @Controller
 public class UserController {
 
+
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
-    @Autowired
+
     private UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @Autowired
     private UserCreateFormValidator userCreateFormValidator;
@@ -38,7 +44,7 @@ public class UserController {
     }
 
     @PreAuthorize("@currentUserServiceImpl.canAccessUser(principal, #id)")
-    @RequestMapping("/user/{id}")
+    @GetMapping("/user/{id}")
     public ModelAndView getUserPage(@PathVariable Long id) {
         LOGGER.debug("Getting user page for user={}", id);
         return new ModelAndView("user", "user", userService.getUserById(id)
@@ -46,10 +52,10 @@ public class UserController {
     }
 
     @PreAuthorize("hasAuthority('BOOKING_MANAGER')")
-    @RequestMapping(value = "/user/create", method = RequestMethod.GET)
+    @GetMapping("/user/create")
     public ModelAndView getUserCreatePage() {
         LOGGER.debug("Getting user create form");
-        return new ModelAndView("user_create", "form", new UserCreateForm());
+        return new ModelAndView(USER_CREATE, "form", new UserCreateForm());
     }
 
     @PreAuthorize("hasAuthority('BOOKING_MANAGER')")
@@ -57,14 +63,14 @@ public class UserController {
     public String handleUserCreateForm(@Valid @ModelAttribute("form") UserCreateForm form, BindingResult bindingResult) {
         LOGGER.debug("Processing user create form={}, bindingResult={}", form, bindingResult);
         if (bindingResult.hasErrors()) {
-            return "user_create";
+            return USER_CREATE;
         }
         try {
             userService.create(form);
         } catch (DataIntegrityViolationException e) {
             LOGGER.warn("Exception occurred when trying to save the user, assuming duplicate email", e);
             bindingResult.reject("email.exists", "Email already exists");
-            return "user_create";
+            return USER_CREATE;
         }
         return "redirect:/users";
     }
